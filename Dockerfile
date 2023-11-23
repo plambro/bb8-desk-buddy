@@ -2,10 +2,16 @@ FROM python:2
 
 WORKDIR /app
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install bluez -y
 
-COPY requirements.txt .
+ENV BB_ADDRESS='00:00:00:00:00'
+
+COPY requirements.txt /app
+COPY app.py /app
+COPY BB8_driver.py /app
+COPY bb8_utils.py /app
 
 RUN pip install -r requirements.txt
 
-CMD ['sleep', '10000']
+CMD ['python', 'app.py']
