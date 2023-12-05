@@ -1,20 +1,14 @@
-from bluepy import btle
-import struct
-import time
-import BB8_driver
-import sys
+from spherov2.sphero_edu import SpheroEduAPI
+from spherov2.types import Color
 
-def rgb_test():
-    bb8 = BB8_driver.Sphero()
-    bb8.connect()
-    bb8.start()
-    time.sleep(2)
-    bb8.set_rgb_led(255,0,0,0,False)
-    time.sleep(1)
-    bb8.set_rgb_led(0,255,0,0,False)
-    time.sleep(1)
-    bb8.set_rgb_led(0,0,255,0,False)
-    time.sleep(3)
-    bb8.join()
-    bb8.disconnect()
+
+def rgb_test(bb8):
+    with SpheroEduAPI(bb8) as api:
+        api.set_main_led(Color(r=255, g=0, b=0))
+    return True
+
+
+def head_test(bb8):
+    with SpheroEduAPI(bb8) as api:
+        api.spin(360, 1)
     return True
