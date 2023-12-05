@@ -1,11 +1,14 @@
-FROM python:2
+FROM python:3.12.0
 
 WORKDIR /app
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install bluez -y
 
-COPY requirements.txt .
+COPY requirements.txt /app
+COPY app.py /app
+COPY bb8_utils.py /app
 
 RUN pip install -r requirements.txt
 
-CMD ['sleep', '10000']
+CMD ["python3", "app.py"]
